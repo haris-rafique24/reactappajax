@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta
+      name="description"
+      content="Web site created using create-react-app"
+    />
+    
+    
+    <title>React App</title>
+  </head>
+  <body>
+
+    <script>
+      function fetchData() {
+        const xhr = new XMLHttpRequest();
+    
+        xhr.onreadystatechange = function() {
+          if (xhr.readyState === 4 && xhr.status === 200) {
+            const response = JSON.parse(xhr.responseText);
+            document.getElementById('data').innerText = response.data;
+          }
+        };
+    
+        xhr.open('GET', 'http://localhost:3001/data', true); // Use the new port
+
+        xhr.send();
+      }
+    
+      // Polling interval in milliseconds
+      const pollingInterval = 1000; // 5 seconds
+    
+      function startPolling() {
+        fetchData();
+        setInterval(fetchData, pollingInterval);
+      }
+    
+      window.onload = startPolling;
+    </script>
+    </head>
+    <body>
+      <h1>AJAX Polling Example</h1>
+      <p>Updated data:<span id="data"></span></p>
+    </body>
+  </body>
+</html>
